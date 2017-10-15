@@ -65,12 +65,12 @@
                             <td class="text-center align-middle">{{ song_data['songname'] }}</td>
                             <td class="text-center align-middle">{{ song_data["songlength"] }}</td>
                             <td class="text-center align-middle description">{{ song_data["summary"] }}</td>
-                            <td class="text-center align-middle"><a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ song_data["order"] }}" aria-expanded="false" aria-controls="collapse{{ song_data["order"] }}">查看更多</a></td>
+                            <td class="text-center align-middle"><a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ song_data['order'] }}" aria-expanded="false" aria-controls="collapse{{ song_data['order'] }}">查看更多</a></td>
                         </tr>
-                        <tr class="collapse" id="collapse{{ song_data["order"] }}">
+                        <tr class="collapse" id="collapse{{ song_data['order'] }}">
                         <td colspan="2" class="text-center align-middle">
                             <!--播放控件-->
-                            <audio src="{{ song_data["songpath"] }}" controls="controls">您的浏览器不支持 audio 标签。</audio>
+                            <audio src="{{ song_data['songpath'] }}" controls="controls" preload="none">您的浏览器不支持 audio 标签。</audio>
                         </td>
                         <td colspan="3" class="text-center align-middle">
                             比特率：{{ song_data["songbitrate"] }} Kbps　　采样率：{{ song_data["songsamplefrequency"] }} Hz
@@ -78,7 +78,7 @@
                             封面格式：{{ song_data["coverformat"] }}　　宽：{{ song_data["coverwidth"] }} px　　高：{{ song_data["coverheight"] }} px
                         </td>
                         <td class="text-center align-middle">
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal" onclick="convertFormat('{{ active }}', '{{ song_data["order"] }}')">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal" onclick="convertFormat('{{ active }}', '{{ song_data['order'] }}')">
                                 转换为PNG
                             </button>
                         </td>
