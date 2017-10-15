@@ -8,85 +8,85 @@
 {% endblock %}
 
 {% block content %}
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-              <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('home') }}">Overview</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link{% if active == 'a' %} active{% endif %}" href="{{ url_for('a_side') }}">A side{% if active == 'a' %} <span class="sr-only">(current)</span>{% endif %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link{% if active == 'b' %} active{% endif %}" href="{{ url_for('b_side') }}">B side{% if active == 'b' %} <span class="sr-only">(current)</span>{% endif %}</a>
-                </li>
-              </ul>
-            </nav>
+        <div class="container-fluid hard-code-3">
+            <div class="row">
+                <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('home') }}">Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link{% if active == 'a' %} active{% endif %}" href="{{ url_for('a_side') }}">A side{% if active == 'a' %} <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link{% if active == 'b' %} active{% endif %}" href="{{ url_for('b_side') }}">B side{% if active == 'b' %} <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                    </ul>
+                </nav>
 
-              <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="modalLabel">转换封面格式（右键另存为）</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body text-center align-middle">
-                              <img src="#" alt="Waiting" id="img_convert">
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">转换封面格式（右键另存为）</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center align-middle">
+                                <img src="#" alt="Waiting" id="img_convert">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-              <h2>{% if active == 'a' %}A{% else %}B{% endif %} side</h2>
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                  <thead class="thead-default">
-                    <tr>
-                      <th class="text-center" style="width: 4rem;">#</th>
-                      <th class="text-center">封面</th>
-                      <th class="text-center" style="width: 12rem;">歌曲名</th>
-                      <th class="text-center" style="width: 4rem;">时长</th>
-                      <th class="text-center" style="width: 24rem;">简介</th>
-                      <th class="text-center">　　</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for song_data in song_list %}
-                    <tr>
-                        <th class="text-center align-middle" scope="row">{{ song_data["order"] }}</th>
-                        <td class="text-center align-middle"><img class="img-thumbnail rounded" src="{{ song_data['coverpath'] }}" alt="No Cover found" height="100"></td>
-                        <td class="text-center align-middle">{{ song_data['songname'] }}</td>
-                        <td class="text-center align-middle">{{ song_data["songlength"] }}</td>
-                        <td class="text-center align-middle description">{{ song_data["summary"] }}</td>
-                        <td class="text-center align-middle"><a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ song_data["order"] }}" aria-expanded="false" aria-controls="collapse{{ song_data["order"] }}">查看更多</a></td>
-                    </tr>
-                    <tr class="collapse" id="collapse{{ song_data["order"] }}">
-                      <td colspan="2" class="text-center align-middle">
-                        <!--播放控件-->
-                        <audio src="{{ song_data["songpath"] }}" controls="controls">您的浏览器不支持 audio 标签。</audio>
-                      </td>
-                      <td colspan="3" class="text-center align-middle">
-                        比特率：{{ song_data["songbitrate"] }} Kbps　　采样率：{{ song_data["songsamplefrequency"] }} Hz
-                        <br />
-                        封面格式：{{ song_data["coverformat"] }}　　宽：{{ song_data["coverwidth"] }} px　　高：{{ song_data["coverheight"] }} px
-                      </td>
-                      <td class="text-center align-middle">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal" onclick="convertFormat('{{ active }}', '{{ song_data["order"] }}')">
-                          转换为PNG
-                        </button>
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+                <h2>{% if active == 'a' %}A{% else %}B{% endif %} side</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-default">
+                        <tr>
+                            <th class="text-center" style="width: 4rem;">#</th>
+                            <th class="text-center">封面</th>
+                            <th class="text-center" style="width: 12rem;">歌曲名</th>
+                            <th class="text-center" style="width: 4rem;">时长</th>
+                            <th class="text-center" style="width: 24rem;">简介</th>
+                            <th class="text-center">　　</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song_data in song_list %}
+                        <tr>
+                            <th class="text-center align-middle" scope="row">{{ song_data["order"] }}</th>
+                            <td class="text-center align-middle"><img class="img-thumbnail rounded" src="{{ song_data['coverpath'] }}" alt="No Cover found" height="100"></td>
+                            <td class="text-center align-middle">{{ song_data['songname'] }}</td>
+                            <td class="text-center align-middle">{{ song_data["songlength"] }}</td>
+                            <td class="text-center align-middle description">{{ song_data["summary"] }}</td>
+                            <td class="text-center align-middle"><a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ song_data["order"] }}" aria-expanded="false" aria-controls="collapse{{ song_data["order"] }}">查看更多</a></td>
+                        </tr>
+                        <tr class="collapse" id="collapse{{ song_data["order"] }}">
+                        <td colspan="2" class="text-center align-middle">
+                            <!--播放控件-->
+                            <audio src="{{ song_data["songpath"] }}" controls="controls">您的浏览器不支持 audio 标签。</audio>
+                        </td>
+                        <td colspan="3" class="text-center align-middle">
+                            比特率：{{ song_data["songbitrate"] }} Kbps　　采样率：{{ song_data["songsamplefrequency"] }} Hz
+                            <br />
+                            封面格式：{{ song_data["coverformat"] }}　　宽：{{ song_data["coverwidth"] }} px　　高：{{ song_data["coverheight"] }} px
+                        </td>
+                        <td class="text-center align-middle">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal" onclick="convertFormat('{{ active }}', '{{ song_data["order"] }}')">
+                                转换为PNG
+                            </button>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </main>
           </div>
         </div>
