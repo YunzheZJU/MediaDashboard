@@ -3,7 +3,7 @@
  */
 
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
-body {
+.hard-code-3 {
   padding-top: 3.5rem;
 }
 
@@ -78,4 +78,12 @@ table {
     table-layout: fixed;
     word-break: break-all;
     word-wrap: break-word;
+}
+
+.hard-code-1 {
+    height: 250px;
+}
+
+.hard-code-2 {
+    margin-top: -140px; color: #fff;
 }
